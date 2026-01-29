@@ -2,5 +2,5 @@ services:
   - type: web
     name: echoaioffical
     runtime: static
-    buildCommand: "echo 'No build step'"
-    staticPublishPath: "./"
+    buildCommand: "mkdir -p dist && cp index.html dist/index.html"
+    staticPublishPath: "dist"
