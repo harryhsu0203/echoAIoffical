@@ -2,6 +2,5 @@ services:
   - type: web
     name: echoaioffical
     runtime: static
-    buildCommand: "true"
-    staticPublishPath: "."
-    autoDeployTrigger: commit
+    buildCommand: "echo 'No build step'"
+    staticPublishPath: "./"
