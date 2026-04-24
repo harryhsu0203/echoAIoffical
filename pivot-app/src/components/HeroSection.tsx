@@ -2,102 +2,136 @@
 
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import BackgroundCanvas from "./BackgroundCanvas";
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const, delay },
+const word = (delay = 0) => ({
+  initial: { opacity: 0, y: 40, filter: "blur(8px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+  transition: {
+    duration: 0.9,
+    ease: [0.16, 1, 0.3, 1] as const,
+    delay,
+  },
 });
 
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="snap-section relative flex flex-col items-center justify-center overflow-hidden bg-black"
+      className="snap-section relative flex flex-col items-center justify-center overflow-hidden bg-[#050507]"
     >
-      {/* Gradient ambient background */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-gradient-radial from-white/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-950/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-950/40 rounded-full blur-3xl" />
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-      </div>
+      <BackgroundCanvas />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <motion.div
-          {...fadeUp(0)}
-          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 text-white/60 text-xs tracking-widest uppercase"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          全方位 AI 服務商
+      {/* Content — above all canvas layers (z-50) */}
+      <div className="relative z-50 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
+        {/* Badge */}
+        <motion.div {...word(0.1)}>
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-white/50 text-xs tracking-[0.25em] uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            全方位 AI 服務商
+          </span>
         </motion.div>
 
+        {/* Main title with metallic gradient */}
         <motion.h1
-          {...fadeUp(0.1)}
-          className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-none"
+          {...word(0.22)}
+          className="mt-8 text-5xl sm:text-7xl lg:text-[88px] font-black tracking-tighter leading-none"
+          style={{
+            background:
+              "linear-gradient(160deg, #ffffff 0%, #e2e8f0 30%, #94a3b8 60%, #ffffff 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
         >
-          Pivot AI
+          樞智 AI：定義你的
           <br />
-          <span className="text-white/40 font-thin">樞智科技</span>
+          <span
+            style={{
+              background:
+                "linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            全場景 AI 戰力
+          </span>
         </motion.h1>
 
+        {/* Subtitle */}
         <motion.p
-          {...fadeUp(0.2)}
-          className="mt-8 text-xl sm:text-2xl text-white/50 font-light tracking-wide max-w-xl mx-auto"
+          {...word(0.36)}
+          className="mt-7 text-lg sm:text-xl text-white/40 font-light tracking-widest"
         >
           本地極速部署，雲端智慧串接。
         </motion.p>
 
+        {/* CTA Buttons */}
         <motion.div
-          {...fadeUp(0.3)}
+          {...word(0.5)}
           className="mt-10 flex flex-wrap justify-center gap-4"
         >
+          {/* Primary: White glow */}
+          <a
+            href="#bento"
+            className="group relative px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-all hover:bg-white/95"
+          >
+            <span className="relative z-10">立即部署</span>
+            <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg bg-white/40" />
+          </a>
+
+          {/* Secondary: Transparent white border */}
           <a
             href="#contact"
-            className="px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-white/90 transition-all hover:scale-105"
-          >
-            立即開始
-          </a>
-          <a
-            href="#local"
-            className="px-8 py-3.5 rounded-full border border-white/20 text-white font-semibold text-sm hover:border-white/50 hover:bg-white/5 transition-all"
+            className="px-8 py-3.5 rounded-full border border-white/25 text-white font-semibold text-sm backdrop-blur-sm hover:border-white/50 hover:bg-white/8 transition-all"
           >
             諮詢方案
           </a>
         </motion.div>
 
+        {/* Stats row */}
         <motion.div
-          {...fadeUp(0.4)}
-          className="mt-20 grid grid-cols-3 gap-px bg-white/5 rounded-2xl overflow-hidden max-w-2xl mx-auto border border-white/10"
+          {...word(0.64)}
+          className="mt-16 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/8 max-w-2xl w-full"
         >
           {[
             { val: "100%", label: "資料主權" },
-            { val: "24/7", label: "持續運行" },
-            { val: "0", label: "月租限制" },
+            { val: "< 100ms", label: "本地推理延遲" },
+            { val: "24/7", label: "持續服務" },
           ].map(({ val, label }) => (
-            <div key={label} className="bg-black py-6 px-4 text-center">
-              <div className="text-2xl font-bold text-white">{val}</div>
-              <div className="text-xs text-white/40 mt-1 tracking-wide">{label}</div>
+            <div
+              key={label}
+              className="py-6 px-4 text-center bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+            >
+              <div
+                className="text-xl sm:text-2xl font-bold"
+                style={{
+                  background: "linear-gradient(135deg, #fff 0%, #94a3b8 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                {val}
+              </div>
+              <div className="text-xs text-white/30 mt-1 tracking-wide">
+                {label}
+              </div>
             </div>
           ))}
         </motion.div>
       </div>
 
+      {/* Scroll hint */}
       <motion.a
-        href="#local"
-        {...fadeUp(0.6)}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/30 hover:text-white/60 transition-colors"
+        href="#bento"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 text-white/20 hover:text-white/50 transition-colors"
       >
-        <ChevronDown size={28} className="animate-bounce" />
+        <ChevronDown size={26} className="animate-bounce" />
       </motion.a>
     </section>
   );

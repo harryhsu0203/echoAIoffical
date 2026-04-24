@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import BentoSection from "@/components/BentoSection";
 import LocalSection from "@/components/LocalSection";
 import SaasSection from "@/components/SaasSection";
 import IntegrationSection from "@/components/IntegrationSection";
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
+      <BentoSection />
       <LocalSection />
       <SaasSection />
       <IntegrationSection />

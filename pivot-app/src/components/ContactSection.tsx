@@ -210,7 +210,7 @@ export default function ContactSection() {
 
         <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-white/6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-white/25">
-            © 2026 Pivot AI 樞智科技. 保留所有權利.
+            © 2026 Pivot AI 樞智科技. All rights reserved.
           </p>
           <p className="text-xs text-white/20">Built with Next.js</p>
         </div>
