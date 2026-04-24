@@ -2,43 +2,55 @@ import Link from "next/link";
 
 interface PivotLogoProps {
   size?: "sm" | "md" | "lg";
-  dark?: boolean;
+  light?: boolean; // for white-bg pages
 }
 
-export default function PivotLogo({ size = "md", dark = false }: PivotLogoProps) {
-  const sizes = {
-    sm: { circle: "w-8 h-8", text: "text-sm", sub: "text-[10px]" },
-    md: { circle: "w-10 h-10", text: "text-[15px]", sub: "text-[11px]" },
-    lg: { circle: "w-14 h-14", text: "text-xl", sub: "text-sm" },
-  };
-  const s = sizes[size];
+export default function PivotLogo({ size = "md", light = false }: PivotLogoProps) {
+  const iconSize = size === "sm" ? 28 : size === "lg" ? 44 : 34;
+  const textCls = size === "sm" ? "text-[13px]" : size === "lg" ? "text-xl" : "text-[15px]";
+  const color = light ? "#0a0a0a" : "#ffffff";
 
   return (
     <Link href="/" className="inline-flex items-center gap-3 group select-none">
-      {/* Circle mark */}
-      <div
-        className={`${s.circle} rounded-full border-2 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform`}
-        style={{ borderColor: "#D4AF37", background: "linear-gradient(145deg, #FDFBF2, #FFF9E6)" }}
+      {/* Geometric SVG mark */}
+      <svg
+        width={iconSize}
+        height={iconSize}
+        viewBox="0 0 34 34"
+        fill="none"
+        className="group-hover:rotate-90 transition-transform duration-500"
       >
-        <span
-          className="font-black leading-none"
-          style={{
-            color: "#D4AF37",
-            fontSize: size === "lg" ? "22px" : size === "sm" ? "13px" : "16px",
-            textShadow: "0 1px 2px rgba(212,175,55,0.3)",
-          }}
-        >
-          P
-        </span>
-      </div>
+        {/* Outer diamond */}
+        <path
+          d="M17 2 L32 17 L17 32 L2 17 Z"
+          stroke={color}
+          strokeWidth="1.2"
+          fill="none"
+          opacity="0.5"
+        />
+        {/* Inner diamond */}
+        <path
+          d="M17 8 L26 17 L17 26 L8 17 Z"
+          stroke={color}
+          strokeWidth="1.5"
+          fill="none"
+        />
+        {/* Center cross */}
+        <line x1="17" y1="12" x2="17" y2="22" stroke={color} strokeWidth="1.5" opacity="0.7" />
+        <line x1="12" y1="17" x2="22" y2="17" stroke={color} strokeWidth="1.5" opacity="0.7" />
+        {/* Center dot */}
+        <circle cx="17" cy="17" r="1.5" fill={color} />
+      </svg>
 
       {/* Brand text */}
-      <div className="flex flex-col leading-none">
-        <span className={`${s.text} font-bold tracking-tight ${dark ? "text-white" : "text-black"}`}>
-          Pivot{" "}
-          <span style={{ color: "#D4AF37" }}>AI</span>
+      <div className="flex flex-col leading-none" style={{ color }}>
+        <span className={`${textCls} font-bold tracking-tight`}>
+          Pivot AI
         </span>
-        <span className={`${s.sub} font-medium mt-0.5 ${dark ? "text-white/40" : "text-black/35"} tracking-widest`}>
+        <span
+          className="text-[10px] font-medium tracking-[0.2em] uppercase mt-0.5"
+          style={{ color: light ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.35)" }}
+        >
           樞智科技
         </span>
       </div>

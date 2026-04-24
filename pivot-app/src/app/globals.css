@@ -1,26 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
-  --gold: #D4AF37;
-  --gold-soft: #F5E9A9;
-  --gold-bg: #FDFBF2;
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --text-muted: #888888;
-  --border: #E8E8E8;
-  --surface: #FBFBFB;
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --bg-alt: #111111;
+  --bg-deep: #050505;
+  --text: #ffffff;
+  --text-muted: rgba(255,255,255,0.45);
+  --text-dim: rgba(255,255,255,0.25);
+  --border: rgba(255,255,255,0.1);
+  --border-subtle: rgba(255,255,255,0.06);
+  --accent: #c8d6e5;
 }
 
 html {
-  background: #ffffff;
+  background: #0a0a0a;
   scroll-behavior: smooth;
 }
 
 body {
-  background: #ffffff;
-  color: var(--text-secondary);
-  font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Arial,
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", "SF Pro Display", -apple-system, "Helvetica Neue", Arial,
     "PingFang TC", "Noto Sans TC", sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -35,14 +36,7 @@ body {
   z-index: 200;
 }
 
-/* Gold shimmer utility */
-.gold-text {
-  color: var(--gold);
-}
-
-.gold-gradient {
-  background: linear-gradient(135deg, #D4AF37 0%, #F5E9A9 50%, #D4AF37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* Full-bleed section utility */
+.section-dark { background: var(--bg); }
+.section-alt  { background: var(--bg-alt); }
+.section-deep { background: var(--bg-deep); }

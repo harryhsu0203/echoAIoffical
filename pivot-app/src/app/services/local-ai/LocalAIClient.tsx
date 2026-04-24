@@ -2,14 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Shield, Cpu, Zap, Lock, Check, ArrowRight, Server } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import PageWrapper from "@/components/PageWrapper";
 
-const fade = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-40px" },
-  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const, delay },
+  transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const, delay },
 });
 
 const platforms = [
@@ -22,108 +22,115 @@ const platforms = [
 ];
 
 const features = [
-  { icon: Lock, title: "100% 本地運行", desc: "所有運算在你的機器完成，雲端無法看到任何圖片或提示詞。" },
-  { icon: Shield, title: "無審核限制", desc: "支持所有模型內容，包含 NSFW、成人創作，完全不受平台政策限制。" },
-  { icon: Cpu, title: "RTX 40/50 深度優化", desc: "針對 NVIDIA Ada/Blackwell 架構調校，最大化 VRAM 效率與推理速度。" },
-  { icon: Zap, title: "零月租費用", desc: "一次架設，永久使用。無訂閱費、無 API 限制、不依賴任何第三方服務。" },
-  { icon: Server, title: "多模型並行", desc: "同時運行圖像生成與 LLM，建立完整本地 AI 工作站環境。" },
-  { icon: Check, title: "完整技術支援", desc: "架設後提供完整操作培訓，確保你能獨立維護與升級。" },
+  { num: "01", title: "100% 本地運行", desc: "所有運算在你的機器完成，雲端無法看到任何圖片或提示詞。" },
+  { num: "02", title: "無審核限制", desc: "支持所有模型內容，包含 NSFW、成人創作，完全不受平台政策限制。" },
+  { num: "03", title: "RTX 40/50 深度優化", desc: "針對 NVIDIA Ada/Blackwell 架構調校，最大化 VRAM 效率與推理速度。" },
+  { num: "04", title: "零月租費用", desc: "一次架設，永久使用。無訂閱費、無 API 限制、不依賴任何第三方服務。" },
 ];
 
 const hardware = [
-  { tier: "入門推薦", gpu: "RTX 4070 / 4070 Ti", vram: "12 GB", perf: "FLUX.1 schnell 快速生成，適合個人創作", price: "約 NT$15,000 起" },
-  { tier: "專業首選", gpu: "RTX 4090 / 5090", vram: "24 GB", perf: "全解析度 FLUX + LoRA 訓練並行", price: "約 NT$50,000 起" },
-  { tier: "多人工作站", gpu: "雙 A100 / H100", vram: "80 GB × 2", perf: "同時服務多用戶 + 大型模型訓練", price: "報價制" },
+  { tier: "Entry", gpu: "RTX 4070 / 4070 Ti", vram: "12 GB", perf: "FLUX.1 schnell，個人創作首選" },
+  { tier: "Professional", gpu: "RTX 4090 / 5090", vram: "24 GB", perf: "全解析度 FLUX + LoRA 訓練並行" },
+  { tier: "Enterprise", gpu: "Dual A100 / H100", vram: "80 GB ×2", perf: "多用戶服務 + 大型模型訓練" },
 ];
 
 export default function LocalAIClient() {
   return (
     <PageWrapper>
-      <main className="bg-white text-[#333]">
-        {/* ── Hero ── */}
-        <section className="pt-24 pb-20 px-6 text-center">
-          <div className="max-w-4xl mx-auto">
-            <motion.div {...fade(0)}>
-              <Link href="/" className="inline-flex items-center gap-2 text-[#999] hover:text-black text-sm mb-8 transition-colors">
-                ← 返回首頁
+      <main style={{ background: "#0a0a0a", color: "#ffffff" }}>
+
+        {/* Hero */}
+        <section className="relative pt-32 pb-24 px-6 overflow-hidden" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="pointer-events-none absolute inset-0"
+            style={{ background: "radial-gradient(ellipse 50% 60% at 80% 50%, rgba(200,214,229,0.05) 0%, transparent 60%)" }} />
+          <div className="max-w-7xl mx-auto">
+            <motion.div {...fadeUp(0)}>
+              <Link href="/" className="inline-flex items-center gap-2 text-sm mb-10 transition-colors"
+                style={{ color: "rgba(255,255,255,0.35)" }}>
+                ← Back
               </Link>
             </motion.div>
-            <motion.p {...fade(0.05)} className="text-xs tracking-[0.3em] uppercase font-bold mb-4" style={{ color: "#D4AF37" }}>
-              本地部署服務
+            <motion.p {...fadeUp(0.05)} className="text-[11px] tracking-[0.3em] uppercase font-semibold mb-6" style={{ color: "rgba(200,214,229,0.5)" }}>
+              Local Deployment
             </motion.p>
-            <motion.h1 {...fade(0.12)} className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter text-black leading-tight mb-6">
+            <motion.h1 {...fadeUp(0.12)} className="font-black tracking-tighter leading-tight mb-6"
+              style={{ fontSize: "clamp(40px, 6vw, 72px)", color: "#ffffff" }}>
               釋放創作本能，
               <br />
-              <span style={{ color: "#D4AF37" }}>拒絕規則審核</span>
+              <span style={{ color: "rgba(255,255,255,0.35)" }}>拒絕規則審核</span>
             </motion.h1>
-            <motion.p {...fade(0.22)} className="text-[#555] text-lg max-w-2xl mx-auto leading-relaxed mb-8">
-              樞智 AI 提供最完整的本地 SD / FLUX / LLM 環境架設服務。
-              數據永不落地，隱私與創意完全由你掌控。支持所有 NSFW 內容生成，隱私永不外洩。
+            <motion.p {...fadeUp(0.22)} className="max-w-xl text-base leading-relaxed mb-10"
+              style={{ color: "rgba(255,255,255,0.45)" }}>
+              樞智 AI 提供最完整的本地 SD / FLUX / LLM 環境架設服務。數據永不落地，隱私與創意完全由你掌控。支持所有 NSFW 內容生成。
             </motion.p>
-            <motion.div {...fade(0.3)} className="flex flex-wrap justify-center gap-4 mb-14">
-              <Link href="/contact"
-                className="px-8 py-3.5 rounded-full font-bold text-sm text-white transition-all hover:opacity-88"
-                style={{ background: "#000" }}>
+            <motion.div {...fadeUp(0.3)} className="flex gap-6 flex-wrap">
+              <Link href="/contact" className="flex items-center gap-2 px-7 py-3 bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors">
                 預約架設諮詢
               </Link>
-              <a href="#platforms"
-                className="px-8 py-3.5 rounded-full font-bold text-sm border transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
-                style={{ borderColor: "#E8E8E8", color: "#333" }}>
-                查看支援平台
+              <a href="#platforms" className="flex items-center gap-2 text-sm border-b pb-0.5 transition-colors"
+                style={{ color: "rgba(255,255,255,0.5)", borderColor: "rgba(255,255,255,0.2)" }}>
+                查看支援平台 <ArrowRight size={14} />
               </a>
-            </motion.div>
-
-            {/* ── Image placeholder ── */}
-            <motion.div {...fade(0.38)}>
-              <div className="aspect-video rounded-3xl border border-[#E8E8E8] bg-[#F7F7F7] flex flex-col items-center justify-center gap-3 overflow-hidden"
-                style={{ background: "linear-gradient(135deg, #F7F7F7 0%, #F0F0F0 100%)" }}>
-                <div className="w-12 h-12 rounded-2xl border-2 border-dashed border-[#CCC] flex items-center justify-center">
-                  <span className="text-2xl">🖼️</span>
-                </div>
-                <p className="text-sm text-[#AAA] font-medium">請在此處放入高品質的 AI 生成藝術圖</p>
-                <p className="text-xs text-[#CCC]">建議尺寸：1920×1080px，展示 FLUX / SD 生成作品</p>
-              </div>
             </motion.div>
           </div>
         </section>
 
-        {/* ── Features ── */}
-        <section className="py-20 px-6" style={{ background: "#FBFBFB" }}>
-          <div className="max-w-6xl mx-auto">
-            <motion.div {...fade(0)} className="text-center mb-12">
-              <p className="text-xs tracking-[0.3em] uppercase font-bold mb-3" style={{ color: "#D4AF37" }}>核心優勢</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tighter text-black">完全的自由與掌控</h2>
+        {/* Image placeholder */}
+        <section style={{ background: "#111111", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="max-w-7xl mx-auto px-6 py-16">
+            <motion.div {...fadeUp(0)}
+              className="w-full flex flex-col items-center justify-center gap-3"
+              style={{ aspectRatio: "16/7", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="w-12 h-12 border border-dashed flex items-center justify-center text-2xl" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
+                +
+              </div>
+              <p className="text-sm" style={{ color: "rgba(255,255,255,0.25)" }}>請在此處放入高品質的 AI 生成藝術圖</p>
+              <p className="text-xs" style={{ color: "rgba(255,255,255,0.15)" }}>建議尺寸：1920×810px</p>
             </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {features.map(({ icon: Icon, title, desc }, i) => (
-                <motion.div key={title} {...fade(i * 0.07)}
-                  className="p-6 rounded-2xl bg-white border transition-all hover:shadow-[0_4px_24px_rgba(212,175,55,0.12)] hover:border-[#D4AF37]/30 group"
-                  style={{ borderColor: "#E8E8E8" }}>
-                  <Icon size={20} className="mb-4 transition-colors group-hover:text-[#D4AF37]" style={{ color: "#D4AF37" }} />
-                  <h3 className="text-base font-bold text-black mb-2">{title}</h3>
-                  <p className="text-sm text-[#777] leading-relaxed">{desc}</p>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section style={{ background: "#0a0a0a", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <motion.h2 {...fadeUp(0)} className="font-black tracking-tighter mb-12"
+              style={{ fontSize: "clamp(28px, 3vw, 40px)", color: "#ffffff" }}>
+              完全的自由與掌控
+            </motion.h2>
+            <div className="grid md:grid-cols-2 gap-0">
+              {features.map(({ num, title, desc }, i) => (
+                <motion.div key={num} {...fadeUp(i * 0.08)}
+                  className="py-8 px-6 border-b transition-colors group"
+                  style={{ borderColor: "rgba(255,255,255,0.06)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.025)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
+                  <span className="text-xs font-mono mb-3 block" style={{ color: "rgba(255,255,255,0.2)" }}>{num}</span>
+                  <h3 className="font-bold text-lg mb-2" style={{ color: "#ffffff" }}>{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>{desc}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── Platforms ── */}
-        <section id="platforms" className="py-20 px-6">
-          <div className="max-w-6xl mx-auto">
-            <motion.div {...fade(0)} className="text-center mb-12">
-              <p className="text-xs tracking-[0.3em] uppercase font-bold mb-3" style={{ color: "#D4AF37" }}>支援平台</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tighter text-black">涵蓋所有主流環境</h2>
-            </motion.div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Platforms */}
+        <section id="platforms" style={{ background: "#111111", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <motion.h2 {...fadeUp(0)} className="font-black tracking-tighter mb-10"
+              style={{ fontSize: "clamp(28px, 3vw, 40px)", color: "#ffffff" }}>
+              涵蓋所有主流平台
+            </motion.h2>
+            <div className="grid md:grid-cols-2 gap-0">
               {platforms.map(({ name, desc }, i) => (
-                <motion.div key={name} {...fade(i * 0.06)}
-                  className="flex items-start gap-4 p-5 rounded-2xl border bg-white transition-all hover:border-[#D4AF37]/40 hover:shadow-[0_4px_16px_rgba(212,175,55,0.08)]"
-                  style={{ borderColor: "#E8E8E8" }}>
-                  <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" style={{ background: "#D4AF37" }} />
+                <motion.div key={name} {...fadeUp(i * 0.06)}
+                  className="flex gap-4 py-5 px-4 -mx-4 border-b transition-colors"
+                  style={{ borderColor: "rgba(255,255,255,0.06)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
+                  <div className="w-1 h-1 rounded-full mt-2.5 shrink-0" style={{ background: "rgba(200,214,229,0.5)" }} />
                   <div>
-                    <div className="text-sm font-bold text-black mb-1">{name}</div>
-                    <div className="text-xs text-[#888]">{desc}</div>
+                    <div className="text-sm font-semibold" style={{ color: "rgba(255,255,255,0.85)" }}>{name}</div>
+                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>{desc}</div>
                   </div>
                 </motion.div>
               ))}
@@ -131,37 +138,36 @@ export default function LocalAIClient() {
           </div>
         </section>
 
-        {/* ── Hardware ── */}
-        <section className="py-20 px-6" style={{ background: "#FBFBFB" }}>
-          <div className="max-w-6xl mx-auto">
-            <motion.div {...fade(0)} className="text-center mb-12">
-              <p className="text-xs tracking-[0.3em] uppercase font-bold mb-3" style={{ color: "#D4AF37" }}>硬體建議</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tighter text-black">找到你的最佳配置</h2>
-            </motion.div>
-            <div className="grid md:grid-cols-3 gap-5">
-              {hardware.map(({ tier, gpu, vram, perf, price }, i) => (
-                <motion.div key={tier} {...fade(i * 0.1)}
-                  className="p-7 rounded-2xl bg-white border transition-all hover:shadow-[0_6px_30px_rgba(212,175,55,0.12)] hover:border-[#D4AF37]/40"
-                  style={{ borderColor: "#E8E8E8" }}>
-                  <p className="text-[10px] text-[#AAA] uppercase tracking-widest mb-3">{tier}</p>
-                  <h3 className="text-lg font-black text-black mb-1">{gpu}</h3>
-                  <p className="text-sm font-bold mb-3" style={{ color: "#D4AF37" }}>{vram} VRAM</p>
-                  <p className="text-sm text-[#777] mb-4 leading-relaxed">{perf}</p>
-                  <p className="text-xs text-[#BBB] border-t border-[#F0F0F0] pt-3">{price}</p>
+        {/* Hardware */}
+        <section style={{ background: "#0a0a0a", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <motion.h2 {...fadeUp(0)} className="font-black tracking-tighter mb-10"
+              style={{ fontSize: "clamp(28px, 3vw, 40px)", color: "#ffffff" }}>
+              硬體配置建議
+            </motion.h2>
+            <div className="grid md:grid-cols-3 divide-x" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+              {hardware.map(({ tier, gpu, vram, perf }, i) => (
+                <motion.div key={tier} {...fadeUp(i * 0.1)} className="px-8 py-8">
+                  <p className="text-[10px] tracking-[0.2em] uppercase font-semibold mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>{tier}</p>
+                  <h3 className="text-lg font-black mb-1" style={{ color: "#ffffff" }}>{gpu}</h3>
+                  <p className="text-sm font-semibold mb-3" style={{ color: "rgba(200,214,229,0.7)" }}>{vram} VRAM</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>{perf}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="py-20 px-6 text-center">
-          <motion.div {...fade(0)} className="max-w-xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tighter text-black mb-4">立即開始架設</h2>
-            <p className="text-[#777] mb-8 leading-relaxed">一條龍服務，從硬體選型到系統上線，確保你能完全獨立維護。</p>
-            <Link href="/contact"
-              className="inline-flex items-center gap-2 px-9 py-3.5 rounded-full font-bold text-sm text-white transition-all hover:scale-[1.02]"
-              style={{ background: "#000" }}>
+        {/* CTA */}
+        <section className="py-20 px-6 text-center" style={{ background: "#111111" }}>
+          <motion.div {...fadeUp(0)} className="max-w-lg mx-auto">
+            <h2 className="font-black tracking-tighter mb-4" style={{ fontSize: "clamp(28px, 3vw, 40px)", color: "#ffffff" }}>
+              立即開始架設
+            </h2>
+            <p className="text-sm leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.4)" }}>
+              從硬體選型到系統上線，一條龍服務，確保你能完全獨立維護。
+            </p>
+            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors">
               預約免費諮詢 <ArrowRight size={15} />
             </Link>
           </motion.div>

@@ -2,243 +2,379 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ExternalLink, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
-const rise = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as const, delay },
-});
-
-const fadeIn = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
+/* ── Animation helpers ── */
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const, delay },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay },
 });
 
-const certBadges = [
-  { emoji: "🛡️", label: "100% 本地算力" },
-  { emoji: "🔞", label: "無審核限制" },
-  { emoji: "💎", label: "隱私安全" },
-];
+const heroAnim = (delay = 0) => ({
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const, delay },
+});
 
-const serviceCards = [
+/* ── Data ── */
+const services = [
   {
-    tag: "本地部署",
-    title: "本地 AI 生圖",
-    subtitle: "無審核 · 零月租 · 完全私有",
-    desc: "SD / FLUX / LLM 完整本地架設，數據永不外流。RTX 50 深度優化，釋放硬體全部潛能。",
+    num: "01",
+    title: "本地生圖部署",
+    desc: "SD / FLUX / LLM 完整架設，無審核，零月租，數據永不外流。RTX 50 深度優化。",
     href: "/services/local-ai",
     external: false,
-    features: ["A1111 / ComfyUI / Forge", "FLUX.1 支援", "NSFW 全支援", "無月租費用"],
   },
   {
-    tag: "企業方案",
+    num: "02",
     title: "企業 AI 串接",
-    subtitle: "私有大腦 · API 整合 · EchoChat",
-    desc: "從私有知識庫到 SaaS 客服平台，一站式企業 AI 落地，確保資料安全與系統穩定。",
+    desc: "私有知識大腦、API 深度整合、EchoChat 客服，從 PoC 到上線一站交付。",
     href: "/services/enterprise",
     external: false,
-    features: ["私有知識大腦", "EchoChat 整合", "API 深度串接", "員工 AI 助理"],
   },
   {
-    tag: "SaaS 平台",
+    num: "03",
     title: "EchoChat SaaS",
-    subtitle: "LINE · Instagram · Telegram",
-    desc: "即插即用 AI 客服平台，訂閱制即享企業級智能客服，支援多語言、情感分析與人機協作。",
+    desc: "LINE · Instagram · Telegram 一鍵串接，企業級 AI 客服，訂閱即用。",
     href: "https://echochat.com.tw/",
     external: true,
-    features: ["多平台串接", "24/7 智能客服", "對話分析", "即開即用"],
   },
+  {
+    num: "04",
+    title: "硬體調優 & 模型代工",
+    desc: "N100 / RTX 50 系統優化、LoRA 訓練代工，榨出每一分硬體潛能。",
+    href: "/services/others",
+    external: false,
+  },
+];
+
+const stats = [
+  { val: "100%", label: "DATA SOVEREIGNTY" },
+  { val: "0", label: "CENSORSHIP FILTERS" },
+  { val: "24/7", label: "UPTIME" },
+  { val: "RTX 50", label: "OPTIMIZED" },
 ];
 
 export default function HomeClient() {
   return (
-    <main className="bg-white">
-      {/* ─── HERO ─── */}
-      <section className="relative min-h-[95dvh] flex flex-col items-center justify-center px-6 text-center overflow-hidden">
-        {/* Subtle background decoration */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full opacity-30"
-            style={{ background: "radial-gradient(ellipse, #FFF9E6 0%, transparent 65%)", filter: "blur(60px)" }} />
-        </div>
+    <main style={{ background: "#0a0a0a" }}>
 
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <motion.div {...rise(0.05)}>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium tracking-widest uppercase"
-              style={{ background: "#FDFBF2", border: "1px solid #E8D99A", color: "#B8942A" }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-              樞智科技 · 一站式私有化 AI 解決方案
-            </span>
-          </motion.div>
+      {/* ═══════════════════════════════════════════════
+          HERO — full viewport, light column from bottom-left
+      ═══════════════════════════════════════════════ */}
+      <section
+        className="relative min-h-[100dvh] flex flex-col justify-end pb-24 overflow-hidden"
+        style={{ background: "#0a0a0a" }}
+      >
+        {/* Light column — CSS only */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 70% at 10% 110%, rgba(200,214,229,0.09) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 50% at 5% 100%, rgba(200,214,229,0.05) 0%, transparent 50%)
+            `,
+          }}
+        />
 
-          <motion.h1 {...rise(0.14)} className="mt-8 font-black tracking-tighter leading-[1.02]">
-            <span className="block text-6xl sm:text-8xl lg:text-[96px] text-black">
-              Pivot AI
-            </span>
-            <span className="block text-2xl sm:text-3xl lg:text-4xl font-semibold mt-3" style={{ color: "#D4AF37" }}>
-              你的私有化、不設限 AI 核心
-            </span>
-          </motion.h1>
+        {/* Subtle horizontal scan lines */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.5) 2px, rgba(255,255,255,0.5) 3px)",
+            backgroundSize: "100% 80px",
+          }}
+        />
 
-          <motion.p {...rise(0.26)} className="mt-6 text-lg text-[#555] max-w-xl mx-auto leading-relaxed">
-            拒絕雲端審核，釋放創作自由。本地算力由你掌控，隱私永不外流。
+        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+          {/* Overline */}
+          <motion.p
+            {...heroAnim(0.2)}
+            className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-6"
+            style={{ color: "rgba(200,214,229,0.6)" }}
+          >
+            PRIVATE · UNLIMITED · SOVEREIGN
           </motion.p>
 
-          {/* Cert badges */}
-          <motion.div {...rise(0.36)} className="mt-7 flex flex-wrap justify-center gap-3">
-            {certBadges.map(({ emoji, label }) => (
-              <span key={label}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border"
-                style={{ background: "#FAFAFA", borderColor: "#E8E8E8", color: "#333" }}>
-                <span>{emoji}</span>
-                {label}
-              </span>
-            ))}
-          </motion.div>
+          {/* Main headline */}
+          <motion.h1
+            {...heroAnim(0.35)}
+            className="font-black tracking-tighter leading-[0.95]"
+            style={{
+              fontSize: "clamp(48px, 8vw, 96px)",
+              color: "#ffffff",
+            }}
+          >
+            你的私有化
+            <br />
+            AI 核心
+          </motion.h1>
 
-          <motion.div {...rise(0.46)} className="mt-8 flex flex-wrap justify-center gap-4">
+          <motion.p
+            {...heroAnim(0.5)}
+            className="mt-8 max-w-md text-base leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.45)" }}
+          >
+            拒絕雲端審核。釋放創作自由。
+            本地算力，完整隱私，由你掌控。
+          </motion.p>
+
+          <motion.div {...heroAnim(0.65)} className="mt-10 flex items-center gap-6">
             <Link href="/services/local-ai"
-              className="px-9 py-3.5 rounded-full font-bold text-sm text-white transition-all hover:opacity-88 hover:scale-[1.02]"
-              style={{ background: "#000" }}>
+              className="flex items-center gap-2 px-7 py-3 bg-white text-black text-sm font-semibold tracking-wide hover:bg-white/90 transition-all duration-200">
               立即部署
             </Link>
             <Link href="/contact"
-              className="px-9 py-3.5 rounded-full font-bold text-sm border transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
-              style={{ borderColor: "#DDDDD", color: "#333" }}>
+              className="flex items-center gap-2 text-sm font-medium border-b border-white/30 pb-0.5 hover:border-white/70 transition-all duration-200"
+              style={{ color: "rgba(255,255,255,0.65)" }}>
               諮詢方案
+              <ArrowRight size={14} />
             </Link>
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-xs text-[#CCC] tracking-widest uppercase">了解更多</span>
-          <div className="w-px h-8 bg-gradient-to-b from-[#CCC] to-transparent" />
-        </motion.div>
+        {/* Bottom divider */}
+        <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "rgba(255,255,255,0.08)" }} />
       </section>
 
-      {/* ─── SERVICE CARDS ─── */}
-      <section className="py-24 px-6" style={{ background: "#FBFBFB" }}>
-        <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeIn(0)} className="text-center mb-14">
-            <p className="text-xs tracking-[0.3em] uppercase font-semibold mb-3" style={{ color: "#D4AF37" }}>服務方案</p>
-            <h2 className="text-4xl sm:text-5xl font-black tracking-tighter text-black">選擇你的 AI 路徑</h2>
-          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {serviceCards.map((card, i) => {
-              const inner = (
-                <>
-                  <div className="flex items-start justify-between mb-5">
-                    <span className="text-xs font-bold px-3 py-1 rounded-full"
-                      style={{ background: "#FDFBF2", color: "#D4AF37", border: "1px solid #E8D99A" }}>
-                      {card.tag}
-                    </span>
-                    {card.external && <ExternalLink size={15} className="text-[#CCC] group-hover:text-[#D4AF37] transition-colors" />}
-                  </div>
-                  <h3 className="text-xl font-black text-black tracking-tight mb-1">{card.title}</h3>
-                  <p className="text-sm font-medium mb-4" style={{ color: "#D4AF37" }}>{card.subtitle}</p>
-                  <p className="text-sm text-[#666] leading-relaxed mb-6">{card.desc}</p>
-                  <ul className="space-y-2 mb-6">
-                    {card.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm text-[#555]">
-                        <span className="w-1 h-1 rounded-full shrink-0" style={{ background: "#D4AF37" }} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto flex items-center gap-1.5 text-sm font-bold transition-all group-hover:gap-2.5"
-                    style={{ color: "#D4AF37" }}>
-                    {card.external ? "前往官網" : "了解更多"}
-                    <ArrowRight size={15} />
-                  </div>
-                </>
-              );
-
-              const cls = "group relative flex flex-col h-full p-7 rounded-3xl border bg-white transition-all duration-300 cursor-pointer hover:shadow-[0_8px_40px_rgba(212,175,55,0.15)] hover:border-[#D4AF37]/40 hover:scale-[1.01]";
-
-              return (
-                <motion.div key={card.title} {...fadeIn(i * 0.1)}>
-                  {card.external
-                    ? <a href={card.href} target="_blank" rel="noopener noreferrer" className={cls} style={{ borderColor: "#E8E8E8" }}>{inner}</a>
-                    : <Link href={card.href} className={cls} style={{ borderColor: "#E8E8E8" }}>{inner}</Link>
-                  }
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TRUST STRIP ─── */}
-      <section className="py-16 px-6 border-t border-[#F0F0F0]">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-            {[
-              { val: "100%", sub: "資料主權" },
-              { val: "無限制", sub: "創作自由" },
-              { val: "零月租", sub: "本地算力" },
-              { val: "24/7", sub: "技術支援" },
-            ].map(({ val, sub }) => (
-              <motion.div key={sub} {...fadeIn()}>
-                <div className="text-3xl font-black text-black tracking-tight">{val}</div>
-                <div className="text-sm text-[#999] mt-1">{sub}</div>
+      {/* ═══════════════════════════════════════════════
+          STATS — Tesla spec sheet style
+      ═══════════════════════════════════════════════ */}
+      <section style={{ background: "#0a0a0a", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/6">
+            {stats.map(({ val, label }, i) => (
+              <motion.div
+                key={label}
+                {...fadeUp(i * 0.08)}
+                className="px-8 py-12 text-center md:text-left"
+              >
+                <div
+                  className="font-black leading-none tracking-tighter"
+                  style={{ fontSize: "clamp(40px, 5vw, 64px)", color: "#ffffff" }}
+                >
+                  {val}
+                </div>
+                <div
+                  className="mt-3 text-[11px] font-semibold tracking-[0.18em] uppercase"
+                  style={{ color: "rgba(255,255,255,0.3)" }}
+                >
+                  {label}
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── ECHOCHAT CALLOUT ─── */}
-      <section className="py-20 px-6 border-t border-[#F0F0F0]" style={{ background: "#FBFBFB" }}>
-        <motion.div {...fadeIn(0)} className="max-w-4xl mx-auto rounded-3xl border p-10 sm:p-14 text-center"
-          style={{ borderColor: "#E8D99A", background: "linear-gradient(135deg, #FFFDF5, #FDFBF2)" }}>
-          <span className="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest"
-            style={{ background: "#FFF9E0", color: "#D4AF37", border: "1px solid #E8D99A" }}>
-            SaaS 推薦
-          </span>
-          <h2 className="mt-5 text-3xl sm:text-4xl font-black tracking-tighter text-black">
-            EchoChat — 企業 AI 客服平台
-          </h2>
-          <p className="mt-4 text-[#666] max-w-xl mx-auto leading-relaxed">
-            無需自建伺服器，訂閱即可整合 LINE、Instagram、Telegram，
-            打造 24/7 智能客服，支援多語言與情感分析。
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="https://echochat.com.tw/" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-88"
-              style={{ background: "#D4AF37", color: "#fff" }}>
-              立即前往 EchoChat <ExternalLink size={14} />
-            </a>
-            <Link href="/services/enterprise"
-              className="px-8 py-3.5 rounded-full font-bold text-sm border transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
-              style={{ borderColor: "#D4AF37", color: "#D4AF37", background: "transparent" }}>
-              企業方案介紹
-            </Link>
+
+      {/* ═══════════════════════════════════════════════
+          SERVICES — horizontal rows with numbers
+      ═══════════════════════════════════════════════ */}
+      <section style={{ background: "#111111" }}>
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Header row */}
+          <div className="py-16 border-b border-white/8">
+            <motion.p
+              {...fadeUp(0)}
+              className="text-[11px] tracking-[0.3em] uppercase font-semibold mb-4"
+              style={{ color: "rgba(200,214,229,0.5)" }}
+            >
+              Services
+            </motion.p>
+            <motion.h2
+              {...fadeUp(0.08)}
+              className="font-black tracking-tighter"
+              style={{ fontSize: "clamp(32px, 4vw, 52px)", color: "#ffffff" }}
+            >
+              全方位 AI 解決方案
+            </motion.h2>
           </div>
-        </motion.div>
+
+          {/* Service rows */}
+          {services.map(({ num, title, desc, href, external }, i) => {
+            const inner = (
+              <motion.div
+                {...fadeUp(i * 0.1)}
+                className="group flex flex-col sm:flex-row sm:items-center gap-6 py-8 px-4 -mx-4 border-b transition-colors duration-300 cursor-pointer"
+                style={{ borderColor: "rgba(255,255,255,0.06)" }}
+                whileHover={{ backgroundColor: "rgba(255,255,255,0.04)" }}
+              >
+                {/* Number */}
+                <span
+                  className="text-xs font-mono font-semibold shrink-0 w-8"
+                  style={{ color: "rgba(255,255,255,0.2)" }}
+                >
+                  {num}
+                </span>
+
+                {/* Title */}
+                <div className="sm:w-64 shrink-0">
+                  <span
+                    className="font-bold text-xl tracking-tight group-hover:text-white transition-colors"
+                    style={{ color: "rgba(255,255,255,0.85)" }}
+                  >
+                    {title}
+                  </span>
+                  {external && (
+                    <ExternalLink size={13} className="inline-block ml-2 opacity-30 group-hover:opacity-70 transition-opacity" />
+                  )}
+                </div>
+
+                {/* Desc */}
+                <p className="flex-1 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
+                  {desc}
+                </p>
+
+                {/* Arrow */}
+                <ArrowRight
+                  size={18}
+                  className="shrink-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200"
+                  style={{ color: "rgba(200,214,229,0.7)" }}
+                />
+              </motion.div>
+            );
+
+            return external
+              ? <a key={num} href={href} target="_blank" rel="noopener noreferrer">{inner}</a>
+              : <Link key={num} href={href}>{inner}</Link>;
+          })}
+        </div>
       </section>
 
-      {/* ─── FINAL CTA ─── */}
-      <section className="py-24 px-6 text-center">
-        <motion.div {...fadeIn(0)} className="max-w-2xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tighter text-black mb-4">
-            準備好了嗎？
-          </h2>
-          <p className="text-[#888] mb-8 text-lg">免費諮詢，30 分鐘了解最適合你的 AI 方案。</p>
+
+      {/* ═══════════════════════════════════════════════
+          ECHOCHAT — split layout with CSS phone mockup
+      ═══════════════════════════════════════════════ */}
+      <section
+        style={{
+          background: "linear-gradient(135deg, #0d0d0d 0%, #0f0f1e 100%)",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Text */}
+            <div>
+              <motion.p {...fadeUp(0)} className="text-[11px] tracking-[0.3em] uppercase font-semibold mb-6" style={{ color: "rgba(200,214,229,0.5)" }}>
+                SaaS Platform
+              </motion.p>
+              <motion.h2 {...fadeUp(0.08)} className="font-black tracking-tighter mb-6" style={{ fontSize: "clamp(32px, 4vw, 52px)", color: "#ffffff" }}>
+                EchoChat
+                <br />
+                <span style={{ color: "rgba(255,255,255,0.35)" }}>企業 AI 對話平台</span>
+              </motion.h2>
+              <motion.p {...fadeUp(0.16)} className="text-base leading-relaxed mb-8 max-w-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
+                無需自建伺服器。訂閱即享企業級智能客服，整合 LINE、Instagram、Telegram，支援多語言與情感分析。
+              </motion.p>
+              <motion.div {...fadeUp(0.24)} className="flex flex-wrap gap-4">
+                <a href="https://echochat.com.tw/" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-3 bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors">
+                  前往 EchoChat
+                  <ExternalLink size={14} />
+                </a>
+                <Link href="/services/enterprise"
+                  className="flex items-center gap-2 px-6 py-3 border text-sm font-medium text-white/70 hover:text-white hover:border-white/40 transition-all"
+                  style={{ borderColor: "rgba(255,255,255,0.2)" }}>
+                  企業方案
+                  <ArrowRight size={14} />
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Right: CSS phone mockup */}
+            <motion.div {...fadeUp(0.1)} className="flex justify-center lg:justify-end">
+              <div
+                className="relative"
+                style={{ width: "260px", height: "520px" }}
+              >
+                {/* Phone body */}
+                <div
+                  className="absolute inset-0 rounded-[40px] border"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    borderColor: "rgba(255,255,255,0.12)",
+                    boxShadow: "0 0 60px rgba(200,214,229,0.06), inset 0 1px 0 rgba(255,255,255,0.1)",
+                  }}
+                />
+                {/* Notch */}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-5 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }} />
+                {/* Screen content */}
+                <div className="absolute inset-3 top-12 rounded-[32px] overflow-hidden" style={{ background: "rgba(255,255,255,0.02)" }}>
+                  {/* Chat bubbles */}
+                  <div className="p-4 flex flex-col gap-3 mt-2">
+                    {[
+                      { align: "left", w: "w-36", h: "h-8" },
+                      { align: "right", w: "w-28", h: "h-6" },
+                      { align: "left", w: "w-40", h: "h-10" },
+                      { align: "right", w: "w-24", h: "h-6" },
+                      { align: "left", w: "w-32", h: "h-8" },
+                    ].map(({ align, w, h }, i) => (
+                      <div key={i} className={`flex ${align === "right" ? "justify-end" : "justify-start"}`}>
+                        <div
+                          className={`${w} ${h} rounded-2xl`}
+                          style={{
+                            background: align === "right"
+                              ? "rgba(200,214,229,0.15)"
+                              : "rgba(255,255,255,0.06)",
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  {/* Typing bar */}
+                  <div className="absolute bottom-4 left-4 right-4 h-10 rounded-full" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }} />
+                </div>
+                {/* Side button */}
+                <div className="absolute top-24 -right-0.5 w-0.5 h-16 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }} />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ═══════════════════════════════════════════════
+          CTA — white background contrast section
+      ═══════════════════════════════════════════════ */}
+      <section
+        className="min-h-[60vh] flex flex-col items-center justify-center text-center px-6 py-24"
+        style={{ background: "#ffffff" }}
+      >
+        <motion.p
+          {...fadeUp(0)}
+          className="text-[11px] tracking-[0.3em] uppercase font-semibold mb-6"
+          style={{ color: "rgba(0,0,0,0.35)" }}
+        >
+          Get Started
+        </motion.p>
+        <motion.h2
+          {...fadeUp(0.1)}
+          className="font-black tracking-tighter leading-tight mb-6"
+          style={{ fontSize: "clamp(40px, 6vw, 80px)", color: "#000000" }}
+        >
+          準備好了嗎？
+        </motion.h2>
+        <motion.p
+          {...fadeUp(0.18)}
+          className="max-w-sm text-base mb-10 leading-relaxed"
+          style={{ color: "rgba(0,0,0,0.5)" }}
+        >
+          30 分鐘免費諮詢，找到最適合你的 AI 方案。
+        </motion.p>
+        <motion.div {...fadeUp(0.26)}>
           <Link href="/contact"
-            className="inline-flex items-center gap-2 px-10 py-4 rounded-full font-bold text-base text-white transition-all hover:scale-[1.02]"
-            style={{ background: "#000" }}>
-            預約免費諮詢 <ArrowRight size={16} />
+            className="flex items-center gap-3 px-10 py-4 bg-black text-white text-sm font-semibold tracking-wide hover:bg-black/90 transition-all duration-200">
+            預約免費諮詢
+            <ArrowRight size={16} />
           </Link>
         </motion.div>
       </section>
+
     </main>
   );
 }
