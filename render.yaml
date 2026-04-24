@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: pivot-ai
+    name: echoaioffical
     runtime: static
     buildCommand: "cd pivot-app && npm install && npm run build"
     staticPublishPath: "pivot-app/out"
