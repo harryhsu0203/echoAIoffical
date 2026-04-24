@@ -1,19 +1,11 @@
-import HeroSection from "@/components/HeroSection";
-import BentoSection from "@/components/BentoSection";
-import LocalSection from "@/components/LocalSection";
-import SaasSection from "@/components/SaasSection";
-import IntegrationSection from "@/components/IntegrationSection";
-import ContactSection from "@/components/ContactSection";
+import type { Metadata } from "next";
+import HomeClient from "@/components/HomeClient";
+
+export const metadata: Metadata = {
+  title: "Pivot AI｜樞智科技 — 私有化、不設限 AI 核心",
+  description: "樞智 AI：本地極速部署，雲端智慧串接。100% 本地算力、無審核限制、RTX 50 系列優化。",
+};
 
 export default function Home() {
-  return (
-    <main>
-      <HeroSection />
-      <BentoSection />
-      <LocalSection />
-      <SaasSection />
-      <IntegrationSection />
-      <ContactSection />
-    </main>
-  );
+  return <HomeClient />;
 }
