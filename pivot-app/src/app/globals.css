@@ -1,31 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --gold: #D4AF37;
+  --gold-soft: #F5E9A9;
+  --gold-bg: #FDFBF2;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #888888;
+  --border: #E8E8E8;
+  --surface: #FBFBFB;
 }
 
 html {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
+  background: #ffffff;
   scroll-behavior: smooth;
-  background: #000000;
 }
 
 body {
-  background: #000000;
-  color: #e1e1e1;
+  background: #ffffff;
+  color: var(--text-secondary);
   font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Arial,
     "PingFang TC", "Noto Sans TC", sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  min-height: 100dvh;
-  position: relative;
 }
 
 .site-nav {
@@ -34,4 +33,16 @@ body {
   left: 0;
   right: 0;
   z-index: 200;
+}
+
+/* Gold shimmer utility */
+.gold-text {
+  color: var(--gold);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #D4AF37 0%, #F5E9A9 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
