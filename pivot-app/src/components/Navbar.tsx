@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, Menu, X } from "lucide-react";
 
 const links = [
-  { href: "#local", label: "本地架設" },
-  { href: "#saas", label: "SaaS 串接" },
-  { href: "#integration", label: "全案整合" },
+  { href: "#local", label: "本地生圖部署" },
+  { href: "#saas", label: "EchoChat SaaS", external: "https://echochat.com.tw/" },
+  { href: "#integration", label: "模型訓練代工" },
+  { href: "#local", label: "硬體調優" },
   { href: "#contact", label: "聯絡我們" },
 ];
 
@@ -15,46 +17,65 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    const fn = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
       className={`site-nav transition-all duration-300 ${
         scrolled
-          ? "bg-black/80 backdrop-blur-xl border-b border-white/10"
+          ? "bg-black/85 backdrop-blur-2xl border-b border-white/8"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
-        <a href="#hero" className="flex items-center gap-3 group">
-          <span className="w-9 h-9 rounded-xl bg-white text-black font-black text-sm grid place-items-center group-hover:scale-105 transition-transform">
+      <div className="max-w-7xl mx-auto px-5 flex items-center justify-between h-[60px]">
+
+        {/* Brand */}
+        <a href="#hero" className="flex items-center gap-3 group shrink-0">
+          <div
+            className="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs text-black group-hover:scale-105 transition-transform"
+            style={{ background: "linear-gradient(135deg, #00D2FF, #818cf8)" }}
+          >
             PA
-          </span>
-          <span className="font-semibold text-white tracking-wide text-sm hidden sm:block">
-            Pivot AI <span className="text-white/40 font-normal">樞智科技</span>
-          </span>
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="text-white font-bold text-sm tracking-wide">Pivot AI</span>
+            <span className="text-[#E1E1E1]/35 text-[10px] font-medium tracking-widest">樞智科技</span>
+          </div>
         </a>
 
-        {/* Desktop links */}
-        <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-white/70 hover:text-white transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-6">
+          {links.map((l) =>
+            l.external ? (
+              <a
+                key={l.label}
+                href={l.external}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-[13px] text-[#E1E1E1]/55 hover:text-[#00D2FF] transition-colors font-medium"
+              >
+                {l.label}
+                <ExternalLink size={11} />
+              </a>
+            ) : (
+              <a
+                key={l.label}
+                href={l.href}
+                className="text-[13px] text-[#E1E1E1]/55 hover:text-white transition-colors font-medium"
+              >
+                {l.label}
+              </a>
+            )
+          )}
           <a
             href="#contact"
-            className="ml-4 px-5 py-2 text-sm font-semibold rounded-full bg-white text-black hover:bg-white/90 transition-colors"
+            className="ml-2 px-5 py-2 rounded-full bg-white text-black text-[13px] font-bold hover:bg-white/90 transition-all"
           >
             立即開始
           </a>
@@ -62,51 +83,60 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white/70 hover:text-white p-1.5 transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          <div className="w-5 flex flex-col gap-1">
-            <span
-              className={`h-px bg-white transition-all ${open ? "rotate-45 translate-y-1.5" : ""}`}
-            />
-            <span
-              className={`h-px bg-white transition-all ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`h-px bg-white transition-all ${open ? "-rotate-45 -translate-y-1.5" : ""}`}
-            />
-          </div>
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="md:hidden bg-black/95 border-b border-white/10 px-6 pb-6 pt-2 flex flex-col gap-4"
-        >
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-white/70 hover:text-white transition-colors py-2 text-sm"
-            >
-              {l.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setOpen(false)}
-            className="px-5 py-2.5 text-sm font-semibold rounded-full bg-white text-black hover:bg-white/90 transition-colors text-center"
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-black/95 border-b border-white/8 overflow-hidden"
           >
-            立即開始
-          </a>
-        </motion.div>
-      )}
+            <div className="px-5 py-4 flex flex-col gap-3">
+              {links.map((l) =>
+                l.external ? (
+                  <a
+                    key={l.label}
+                    href={l.external}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between py-2.5 text-sm text-[#E1E1E1]/60 hover:text-[#00D2FF] transition-colors border-b border-white/5"
+                  >
+                    {l.label}
+                    <ExternalLink size={13} />
+                  </a>
+                ) : (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="py-2.5 text-sm text-[#E1E1E1]/60 hover:text-white transition-colors border-b border-white/5"
+                  >
+                    {l.label}
+                  </a>
+                )
+              )}
+              <a
+                href="#contact"
+                onClick={() => setOpen(false)}
+                className="mt-2 w-full py-3 rounded-full bg-white text-black text-sm font-bold text-center hover:bg-white/90 transition-all"
+              >
+                立即開始
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

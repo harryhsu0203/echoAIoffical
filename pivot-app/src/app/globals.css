@@ -1,33 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050507;
-  --foreground: #ffffff;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  color-scheme: dark;
 }
 
 html {
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   scroll-behavior: smooth;
-  background: #050507;
+  background: #000000;
 }
 
 body {
-  background: #050507;
-  color: #ffffff;
+  background: #000000;
+  color: #e1e1e1;
   font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Arial,
     "PingFang TC", "Noto Sans TC", sans-serif;
   overflow-x: hidden;
-  /* Ensure text is always white — never invisible */
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Sections snap */
 .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -35,16 +28,10 @@ body {
   position: relative;
 }
 
-/* Fixed nav doesn't participate in snap */
 .site-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 200;
-}
-
-/* Ensure motion elements are always visible unless explicitly hidden */
-[data-framer-motion-hidden] {
-  visibility: visible !important;
 }
