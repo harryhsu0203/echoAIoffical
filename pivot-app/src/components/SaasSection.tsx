@@ -77,12 +77,12 @@ export default function SaasSection() {
         >
           雲端 AI
           <br />
-          <span className="text-white/30">即插即用</span>
+          <span className="text-slate-400">即插即用</span>
         </motion.h2>
 
         <motion.p
           {...fadeUp(0.14)}
-          className="mt-6 text-white/50 text-lg max-w-xl"
+          className="mt-6 text-slate-300 text-lg max-w-xl"
         >
           無需自建伺服器，透過訂閱制 SaaS 方案立即獲得企業級 AI 能力，
           快速串接現有社群與業務系統，數分鐘內上線。

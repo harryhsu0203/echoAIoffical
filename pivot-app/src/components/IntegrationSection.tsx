@@ -50,7 +50,7 @@ export default function IntegrationSection() {
         >
           從諮詢到上線
           <br />
-          <span className="text-white/30">一站搞定</span>
+          <span className="text-slate-400">一站搞定</span>
         </motion.h2>
 
         <div className="mt-12 grid lg:grid-cols-2 gap-12">

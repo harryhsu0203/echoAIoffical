@@ -178,13 +178,7 @@ export default function BentoSection() {
 
         <motion.h2
           {...fadeUp(0.08)}
-          className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter"
-          style={{
-            background: "linear-gradient(160deg, #fff 0%, #94a3b8 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
+          className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white"
         >
           一站式 AI 能力
         </motion.h2>

@@ -62,12 +62,12 @@ export default function LocalSection() {
         >
           本地 AI
           <br />
-          <span className="text-white/30">完全掌控</span>
+          <span className="text-slate-400">完全掌控</span>
         </motion.h2>
 
         <motion.p
           {...fadeUp(0.14)}
-          className="mt-6 text-white/50 text-lg max-w-xl"
+          className="mt-6 text-slate-300 text-lg max-w-xl"
         >
           將企業 AI 能力完整部署於自有環境，無月租費用，資料主權百分百在你手中。
           針對 RTX 40 / 50 系列 GPU 深度優化，確保最佳推理效能。
